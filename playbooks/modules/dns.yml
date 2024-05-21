@@ -1,0 +1,11 @@
+- name: Set DNS record
+  ansible.builtin.template:
+    src: templates/netplan.conf.j2
+    dest: /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
+  become: true
+- name: Apply netplan
+  ansible.builtin.command:
+    cmd: netplan apply
+  async: 10
+  poll: 2
+  become: true
